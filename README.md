@@ -35,6 +35,8 @@ python manage.py runserver 127.0.0.1:8000
 
 ------
 
+用户初始密码均为：tyb12345678
+
 部署网址为：<http://sityb.cn/bfb/directory/>
 
 学习项目，欢迎建议
