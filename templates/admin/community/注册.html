@@ -1,0 +1,49 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/community.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+    {% block title %}
+<title> 请注册</title>{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bfb/javascript/error_alert.js' %}"></script>
+<script>
+    $(function () {
+        $("#directory").css({"background": "rgba(127,62,252,0.62)"});
+        let error_cap = '{{ login_form.captcha.errors|safe }}';
+        if (error_cap) {sign_error("验证码错误！");}
+        else {
+            let error = '{{ message|safe }}';
+            if(error) {register_error(error)}
+        }
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="register_form">
+    <form method="POST">
+      {% csrf_token %}
+      <h3>欢迎注册</h3>
+      {% for form in register_form %}
+      <div class="form-inline">
+          {{ form.label_tag }}
+          {{ form }}
+      </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-outline-dark" value="注册">注册</button>
+    </form>
+</div>
+
+{% endblock %}
+</body>
+
+</html>

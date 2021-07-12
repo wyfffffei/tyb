@@ -1,0 +1,134 @@
+body {
+  color: white;
+  background-color: #48475c;
+}
+hr { color: #c9cdec; }
+
+.bottom p,
+#BeiAn a { color: #c2c2c2; }
+
+#BeiAn a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.table > tbody > tr > td { border: 0; }
+
+/* 背景栏 */
+.manage_section {
+  min-width: 200px;
+  border-radius: 5px;
+  margin: 15px;
+  padding: 15px;
+  background-color: #6f7482;
+  font-size: 14px;
+}
+
+.manage_section a {
+  text-decoration: none;
+  color: #e3e3e3;
+}
+
+.manage_section a:hover { color: white; }
+
+.manage_section p,
+small { padding: 0 10px 0 10px; }
+
+/* 球队，球员栏 */
+#team_list,
+#athlete_list {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.team_each,
+.ath_each {
+  width: 15%;
+  height: 220px;
+  margin: 50px;
+}
+
+/* 表单样式 */
+.form-inline,
+.form-group { padding: 5px 10px 5px 10px; }
+
+.form-inline label {
+  width: 10% !important;
+  justify-content: left;
+}
+
+.form-group input,
+textarea { width: 40% !important; }
+.form-inline input { width: 25% !important; }
+
+.form-control {
+  height: 30px;
+  font-size: 14px;
+  padding: 0 0 0 7px;
+}
+
+#e_game_contest_g .form-group { width: 15% !important; }
+#e_game_contest_d .form-group { width: 15% !important; }
+#e_game_contest_g .form-inline label { width: 25% !important; }
+#e_game_contest_d .form-inline label { width: 25% !important; }
+
+/* 按钮 */
+.new {
+  float: right;
+}
+
+.confirm {
+  margin-left: 5px;
+  font-size: 10px;
+  height: 35px;
+  width: 75px;
+}
+
+#score_update {
+  color: #c7c7c7;
+  text-decoration: none;
+}
+
+#score_update:hover {
+  color: white;
+}
+
+/* 面包屑导航栏 */
+.breadcrumb {
+  background-color: #48475c;
+  padding-top: 0;
+  padding-bottom: 5px;
+}
+
+.breadcrumb a {
+  color: #e3e3e3;
+}
+
+.breadcrumb a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+/* 原图片展示 */
+.show_team_picture {
+  width: 500px;
+  height: 300px;
+}
+
+.show_team_picture_d {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+}
+
+#team_delete_form { float: right; }
+
+.team_title {
+  padding-top: 5px;
+  padding-left: 25px;
+}

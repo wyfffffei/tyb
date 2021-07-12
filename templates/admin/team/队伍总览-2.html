@@ -1,0 +1,323 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/team_det.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+{% block title %}
+    <title>{{ team.team_name }}</title>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'bfb/javascript/echarts-440-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bfb/javascript/team_info.js' %}"></script>
+    <script>
+        $(function () {
+            // 该球队和小组第一的数据对比
+    let score = '{{ team.score.score|safe }}';
+    let win = '{{ team.score.num_win|safe }}';
+    let lose = '{{ team.score.num_lose|safe }}';
+    let rank = '{{ team.score.rank|safe }}';
+    let score_1 = '{{ leader.score.score|safe }}';
+    let win_1 = '{{ leader.score.num_win|safe }}';
+    let lose_1 = '{{ leader.score.num_lose|safe }}';
+    let rank_1 = '{{ leader.score.rank|safe }}';
+    // echarts初始化
+    let myChart = echarts.init(document.getElementById('score_chart'), 'light');
+    // 指定图表的配置项和数据
+    let option = {
+        title: {
+        text:'小组赛',
+        x:'center'
+        },
+        tooltip: {
+            trigger:'axis'
+        },
+        grid: {},
+        xAxis: [{
+            type:'category',
+            boundaryGap:false,
+            data: ["积分","胜场","负场","排名"]
+        }],
+        yAxis: [{
+            type:'value',
+            splitArea:{show:true}
+        }],
+        series: [
+            {
+                name: '本队',
+                type: 'line',
+                data: [score, win, lose, rank]
+            },
+            {
+                name: '最好成绩',
+                type: 'line',
+                data: [score_1, win_1, lose_1, rank_1]
+            }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+        })
+    </script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 choiceSection">
+            <div class="container">
+                <div class="row" id="team_info">
+                    <div class="col-md">
+                        <div class="pictureTeam_l">
+                            <img src="{{ MEDIA_URL }}{{ team.team_picture }}" alt="team_picture"/></div>
+                        <p>{{ team.team_name }}</p>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs flex-column" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" data-toggle="tab" href="#home">主页</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" data-toggle="tab" href="#Athlete">阵容</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" data-toggle="tab" href="#score">得分</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#contest">赛程</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#note">留言板</a>
+                    </li>
+                </ul>
+                <div class="row m-2">
+                    <button type="button" class="btn btn-sm btn-outline-dark message">说点什么吧</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 tab-content bodySection">
+            <ol class="breadcrumb mt-2">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:team' %}">队伍总览</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:teamall' match.id %}">{{ match.match_name }}</a></li>
+                <li class="breadcrumb-item active">{{ team.team_name }}</li>
+            </ol>
+            <div id="home" class="container-fluid tab-pane active">                
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>{{ team.team_name }}</h1>
+                        <p class="text-secondary">English Name</p>
+                        <p class="text-dark" id="class_intro">{% if team.team_introduction %}
+                            {{team.team_introduction}}{% else %}...{% endif %}</p>
+                    </div>
+                    <div class="col-md-3 offset-1">
+                        <div class="pictureTeam_r">
+                            <img src="{{ MEDIA_URL }}{{ team.team_picture }}" alt="team_picture"></div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-7 mb-5">
+                        <h3>历史荣誉</h3>
+                        <p class="text-dark" id="honor">...</p>
+                    </div>
+                </div>
+                <h3>阵容简介</h3>
+                <div class="row" id="ath">
+                {% for ath in team.athlete_set.all|slice:"3" %}
+                    <div class="col-md-3 athlete card">
+                        <div class="athlete_picture">
+                            <img class="img-fluid img-thumbnail" src="{{ MEDIA_URL }}{{ ath.ath_picture }}" alt="head">
+                        </div>
+                        <div class="athlete_info">
+                            <h5 class="card-title" id="main_name">
+                                <a href="{% url 'bfb:athdetail' match.id team.id ath.id %}">{{ ath.ath_name }}</a></h5>
+                            <p>号码：{{ ath.ath_number }}</p>
+                            <p>身高：{%if ath.ath_height%}{{ ath.ath_height }}{%else%}秘密{%endif%}</p>
+                            <p>体重：{%if ath.ath_weight%}{{ ath.ath_weight }}{%else%}秘密{%endif%}</p>
+                            <p>司职：{{ ath.get_ath_position_display }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div id="Athlete" class="container tab-pane fade">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <td>班级</td>
+                        <td>队名</td>
+                        <td>分组</td>
+                        <td>比赛状态</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ team.team_name }}</td>
+                        <td>{{ team.get_team_num_display }}</td>
+                        <td>{{ team.get_team_group_display }}</td>
+                        <td><mark>{{ team.get_isOut_display }}</mark></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <h3>阵容详情</h3>
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="team_detail">
+                        <tr>
+                            <th>姓名</th>
+                            <th>位置</th>
+                            <th>身高</th>
+                            <th>体重</th>
+                            <th>球号</th>
+                            <th>生日</th>
+                            <th>所属班级</th>
+                        </tr>
+                    </thead>
+                    <tbody class="team_athlete">
+                        {% for ath in team.athlete_set.all %}
+                        <tr>
+                            <td><a href="{% url 'bfb:athdetail' match.id team.id ath.id %}">
+                                {{ ath.ath_name }}</a></td>
+                            <td>{{ ath.get_ath_position_display }}</td>
+                            <td>{%if ath.ath_height%}{{ ath.ath_height }}米{%else%}秘密{%endif%}</td>
+                            <td>{%if ath.ath_weight%}{{ ath.ath_weight }}公斤{%else%}秘密{%endif%}</td>
+                            <td>{{ ath.ath_number }}</td>
+                            <td>{%if ath.ath_bir%}{{ ath.ath_bir }}{%else%}秘密{%endif%}</td>
+                            <td>{{ ath.team }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="score" class="container tab-pane fade">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <td>班级</td>
+                        <td>队名</td>
+                        <td>分组</td>
+                        <td>比赛状态</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ team.team_name }}</td>
+                        <td>{{ team.get_team_num_display }}</td>
+                        <td>{{ team.get_team_group_display }}</td>
+                        <td><mark>{{ team.get_isOut_display }}</mark></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <h3>得分详情</h3>
+                <div class="chart">
+                    <div id="score_chart"></div>
+                    <div class="chart_info">
+                        <table class="table">
+                            <tr>
+                                <td>积分</td>
+                                <td>{{ team.score.score }}</td>
+                            </tr>
+                            <tr>
+                                <td>净胜</td>
+                                <td>{{ team.score.netscore }}</td>
+                            </tr>
+                            <tr>
+                                <td>胜场</td>
+                                <td>{{ team.score.num_win }}</td>
+                            </tr>
+                            <tr>
+                                <td>负场</td>
+                                <td>{{ team.score.num_lose }}</td>
+                            </tr>
+                            <tr>
+                                <td>排名</td>
+                                <td>{{ team.score.rank }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="contest" class="container tab-pane fade">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <td>班级</td>
+                        <td>队名</td>
+                        <td>分组</td>
+                        <td>比赛状态</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ team.team_name }}</td>
+                        <td>{{ team.get_team_num_display }}</td>
+                        <td>{{ team.get_team_group_display }}</td>
+                        <td><mark>{{ team.get_isOut_display }}</mark></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <h3>具体赛程</h3>
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="team_detail">
+                    <tr>
+                        <th>主队</th>
+                        <th>主队得分</th>
+                        <th>客队</th>
+                        <th>客队得分</th>
+                        <th>类型</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for con in cons %}
+                    <tr>
+                        <td>{{ con.battle_teams.all.0 }}</td>
+                        <td>{{ con.cs1 }}</td>
+                        <td>{{ con.battle_teams.all.1 }}</td>
+                        <td>{{ con.cs2 }}</td>
+                        <td>{{ con.get_contest_style_display }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="note" class="container tab-pane fade">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <td>班级</td>
+                        <td>队名</td>
+                        <td>分组</td>
+                        <td>比赛状态</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ team.team_name }}</td>
+                        <td>{{ team.get_team_num_display }}</td>
+                        <td>{{ team.get_team_group_display }}</td>
+                        <td><mark>{{ team.get_isOut_display }}</mark></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <h3>留言板</h3>
+                {% for note in team.teamvoice_set.all %}
+                <div class="notepad">
+                    <p>{{ note.voice }}</p>
+                    <p>{{ note.author.name }} | 发布于{{ note.c_time }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,84 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/community.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+{% block title %}
+    <title>编辑</title>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bfb/javascript/error_alert.js' %}"></script>
+<script src="{% static 'bfb/javascript/option_selected.js' %}"></script>
+<script>
+    $(function () {
+        $("#directory").css({"background": "rgba(127,62,252,0.62)"});
+        $("#id_headline").val("{{ art.headline|safe }}");
+        option_selected($("#id_label_tag"), "{{ art.label_tag|safe }}");
+        let error = '{{ message|safe }}';
+        if (error) {publish_error(error);}
+        let is_super = '{{ is_super|safe }}';
+        if (is_super == "False") {
+          let options = $($("select").children());
+          options.eq(0).attr('disabled', 'disabled');
+          options.eq(1).attr('selected', 'selected');
+        }
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="alter_form">
+    <form id="articleAlter_form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <h2>请修改</h2>
+    <div class="form-inline">
+        {{ publish_form.headline.label_tag }}
+        {{ publish_form.headline }}
+    </div>
+    <div class="form-inline">
+        {{ publish_form.body.label_tag }}
+<!--        {{ publish_form.body }}-->
+        <textarea name="body" cols="60" rows="15" class="form-control" placeholder="正文" maxlength="1024" required="" id="id_body">{{ art.content.body }}</textarea>
+    </div>
+    <div class="form-inline">
+      {{ publish_form.label_tag.label_tag }}
+      {{ publish_form.label_tag }}
+    </div>
+    <div class="form-inline">
+      {{ publish_form.picture.label_tag }}
+      {{ publish_form.picture }}
+      <script src="{% static 'bfb/javascript/file_input_detect.js' %}"></script>
+    </div>
+    <button type="submit" class="btn btn-outline-dark" id="article_alter_Submit">发表</button>
+    <script type="text/javascript">
+      $(function () {
+        $("#article_alter_Submit").confirm({
+          title: '<p style="color: #ffa768">提示</p>',
+          content: '<p style="color: gray">确认修改？</p>',
+          buttons: {
+            "确认": function () {
+              if( test("id_picture", 3072) ){
+                $("#articleAlter_form").submit();
+                // alert("提交成功！");
+              }
+            },
+            "再看看": function () {},
+          }
+        });
+      })
+    </script>
+    </form>
+</div>
+
+{% endblock %}
+</body>
+
+</html>

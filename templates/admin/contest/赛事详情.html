@@ -1,0 +1,81 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/event.css' %}">{% endblock %}
+{% block title %}
+    <title> 赛事详情</title>{% endblock %}
+</head>
+
+<body> 
+{% block content %}
+<div id="bki" class="event_background"></div>
+<script>
+    $(function () {
+        let bkg_url = "http://sityb.cn/static/bfb/image/bg-2-1.jpg";
+        loadImg(bkg_url, addImg);
+    })
+</script>
+<div class="container-fluid">
+    <div id="event_title" class="row">
+        <div class="col-md-9 offset-2 long_title">
+            <p><b>{{ game.match_name }}</b></p>
+            <p>{{ game.match_season }}
+                <span><img id="basketball" src="{% static 'bfb/image/basketball.png' %}" alt="basketball_icon"></span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <!-- TODO 可以根据比赛的进展分类，筛选小组赛，淘汰赛，半决赛决赛 -->
+<!--            <ul class="nav flex-column sel">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="#">小组赛</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">淘汰赛</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">决赛</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+        </div>
+        <div class="col-md-9">
+            {% for contest in contest_all %}
+            <div class="contest_each">
+                <div class="dayTitle">
+                    {% if contest.contest_date %}{{ contest.contest_date }}
+                    {% else %}待定{% endif %}
+                </div>
+                <div class="contestBody">
+                    <div class="contest_time">
+                        <p>{% if contest.contest_time %}{{ contest.contest_time }}
+                        {% else %}待定{% endif %}</p>
+                        <p class="time-style">{{ contest.get_contest_style_display }}</p>
+                    </div>
+                    <div class="battle_teams">
+                        <p>{{ contest.battle_teams.all.0 }}</p>
+                        <p>{{ contest.battle_teams.all.1 }}</p>
+                    </div>
+                    <div class="contest_result">
+                        <p>{{ contest.cs1 }}</p>
+                        <p>{{ contest.cs2 }}</p>
+                    </div>
+                    <div class="contest_content">
+                        <p>{% if contest.contest_content %}{{ contest.contest_content }}
+                        {% else %}...{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="xxx_bottom">>你碰到了我的底线<</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+
+</html>

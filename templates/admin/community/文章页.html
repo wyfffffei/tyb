@@ -1,0 +1,150 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/community_det.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+    <script>
+        $(function () {
+            let like_button = $(".like button");
+            let is_up = "{{ is_up }}";
+            if (!is_up || is_up == "False") {
+                like_button.removeClass("up");
+            }else{
+                like_button.addClass("up");
+            }
+            // 点赞动画
+            like_button.click(function(){
+                let dom = "<img class=\"love\" src=\"{% static 'bfb/image/love.png' %}\" alt=\"喜欢\">";
+                $(this).append(dom);
+                $(".love").show().animate({top:"-=30px",opacity:"0"},500);
+            })
+            // 评论滚动出现
+            $(".comment button").click(function(){
+                $(".aComment").slideToggle("slow");
+            });
+            // ajax获取点赞请求
+            $('.like button').click(function () {
+                let up = !$(this).hasClass('up');
+                let art_id = "{{ article.id|safe }}";
+                $.ajax({
+                    url: '/bfb/community/article/article_id%3F=' + art_id + '/',
+                    datatype: 'json',
+                    type: 'post',
+                    data: {
+                        'up': up,
+                    },
+                    success: function (data) {
+                        // console.log(data);
+                        if (data.state) {
+                            let num = $('#like_num');
+                            let val = parseInt(num.text());
+                            if(data.handled){
+                                num.text(val+1);
+                                like_button.addClass("up");
+                            }else{
+                                num.text(val-1);
+                                like_button.removeClass("up");
+                            }
+                        }
+                        else {
+                            if (data.msg) {
+                                $.alert({
+                                    title: '提示',
+                                    content: data.msg,
+                                    type: 'orange',
+                                });
+                            } else {
+                                $.alert({
+                                    title: '提示',
+                                    content: "未知错误..",
+                                    type: 'orange',
+                                });
+                            }
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}
+{% block title %}
+<title> {{ article.headline }} | {{ article.user.name }}</title>{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="ArticleContainer">
+    <div class="aTitle">
+        {% if message %}{{ message }}{% endif %}
+        <h3><strong>{{ article.headline }}</strong></h3>
+    </div>
+    <div class="aAuthor">
+        <p>作者 {{ article.user.name }}&nbsp;|&nbsp;发表时间 {{ article.pub_time }}&nbsp;| 浏览量 {{ article.content.num_visited }}
+            <span><a href="{% url 'bfb:community' %}">
+                <svg t="1616658304128" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4510" width="17" height="17"><path d="M778.671 926.323a56.811 56.811 0 1 1-80.33 80.331L243.85 552.165a56.811 56.811 0 0 1 0-80.33l454.49-454.49a56.811 56.811 0 1 1 80.33 80.331L364.348 512 778.67 926.323z" p-id="4511"></path></svg></a></span>
+            {% if is_me %}
+            <span><a href="{% url 'bfb:art_alter' article.id %}">
+                <svg t="1614181129516" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4992" width="18" height="18"><path d="M945.194667 84.138667a170.666667 170.666667 0 0 1 0 241.322666L371.925333 898.688a42.368 42.368 0 0 1-19.114666 11.093333L34.133333 995.114667l85.418667-318.72 1.578667-4.693334a42.410667 42.410667 0 0 1 9.472-14.421333L703.829333 84.181333a170.666667 170.666667 0 0 1 241.365334 0z m-176.384 55.978666l-4.693334 4.352L199.04 709.546667 154.88 874.410667l164.821333-44.16L884.821333 265.130667a85.333333 85.333333 0 0 0 4.352-116.010667l-4.352-4.693333a85.333333 85.333333 0 0 0-116.010666-4.266667z" fill="#4ac9ff" p-id="4993"></path></svg>
+            </a></span>
+            <span><a href="{% url 'bfb:art_delete' article.id %}">
+                <svg t="1614178386797" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4445" width="18" height="18"><path d="M597.333333 42.666667a128 128 0 0 1 128 128v42.666666h170.666667a42.666667 42.666667 0 0 1 0 85.333334h-42.666667v554.666666a128 128 0 0 1-128 128H298.666667a128 128 0 0 1-128-128V298.666667H128a42.666667 42.666667 0 1 1 0-85.333334h170.666667V170.666667a128 128 0 0 1 128-128h170.666666z m170.666667 256H256v554.666666a42.666667 42.666667 0 0 0 37.674667 42.368L298.666667 896h426.666666a42.666667 42.666667 0 0 0 42.368-37.674667L768 853.333333V298.666667z m-341.333333 128a42.666667 42.666667 0 0 1 42.666666 42.666666v256a42.666667 42.666667 0 0 1-85.333333 0v-256a42.666667 42.666667 0 0 1 42.666667-42.666666z m170.666666 0a42.666667 42.666667 0 0 1 42.666667 42.666666v256a42.666667 42.666667 0 0 1-85.333333 0v-256a42.666667 42.666667 0 0 1 42.666666-42.666666z m0-298.666667h-170.666666a42.666667 42.666667 0 0 0-42.368 37.674667L384 170.666667v42.666666h256V170.666667a42.666667 42.666667 0 0 0-37.674667-42.368L597.333333 128z" fill="#ff7272" p-id="4446"></path></svg>
+            </a></span>
+            {% endif %}
+        </p>
+    </div>
+    <hr/>
+    <div class="aBody">
+        {% if article.content.picture %}
+        <div class="main_picture">
+            <img src="{{ MEDIA_URL }}{{ article.content.picture }}" alt="article_picture">
+        </div>
+        {% endif %}
+        <div class="text_body">
+            <pre>{{ article.content.body }}</pre>
+        </div>
+    </div>
+    <hr/>
+    <div class="aInfo">
+        <div class="like">
+            <button class="btn btn-sm">赞 <span id="like_num">{{ article.content.num_liked }}</span></button>
+        </div>
+        <div class="comment">
+            <button class="btn btn-sm">评 <span>{{ article.content.num_comment }}</span></button>
+        </div>
+        <script>
+    $(function(){
+
+    })
+   </script>
+    </div>
+    <div class="aComment">
+        <form method="post" action="{% url 'bfb:art_comment' article.id %}">
+            {% csrf_token %}
+            <div class="form-group-sm" id="comment_form">
+                <label for="comment">评论</label>
+                <textarea name="comment" id="comment" cols="60" rows="5" placeholder="说说你的感想.."
+                          class="form-control" maxlength="450" required=""></textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">提交</button>
+        </form>
+    </div>
+    <hr/>
+    <div class="aComment-d">
+        {% for comment in comments|slice:20 %}
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.discusser.name }} | 发布于 {{ comment.pub_time }}</p>
+        <hr/>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+</body>
+
+</html>

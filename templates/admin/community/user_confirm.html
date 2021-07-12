@@ -1,0 +1,42 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/community.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> 邮箱确认</title>
+    {% endblock %}
+{% block js %}
+<script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bfb/javascript/error_alert.js' %}"></script>
+<script>
+    $(function () {
+        $("#directory").css({"background": "rgba(127,62,252,0.62)"});
+        let error = '{{ message|safe }}';
+        if(error) {register_error(error)}
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="register_form">
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group-sm">
+        <label for="confirm">请输入邮箱注册码：</label>
+        <input type="text" class="form-control" name="code" id="confirm" required="" maxlength="100" autofocus>
+    </div>
+    <button type="submit" class="btn btn-success">提交</button>
+</form>
+</div>
+
+{% endblock %}
+</body>
+</html>

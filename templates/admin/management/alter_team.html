@@ -1,0 +1,128 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+    <!-- 输入提示框 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(编辑球队) </title>
+    {% endblock %}
+{% block js %}
+    <!-- 输入提示框 -->
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+    <!-- option选项添加selected属性 -->
+    <script src="{% static 'bfb/javascript/option_selected.js' %}"></script>
+    <script>
+        $(function () {
+            $("#id_team_name").val("{{ a_team.team_name|safe }}");
+            $("#id_team_introduction").val("{{ a_team.team_introduction|safe }}");
+            option_selected($("#id_team_num"), "{{ a_team.team_num|safe }}");
+            option_selected($("#id_team_group"), "{{ a_team.team_group|safe }}");
+            option_selected($("#id_team_isout"), "{{ a_team.isOut|safe }}");
+
+            $("#team_delete_submit").confirm({
+                title: '<p style="color: red">提示</p>',
+                content: '<p style="color: gray">确定删除该球队吗？该操作可能无法恢复！</p>',
+                buttons: {
+                    "确认": function () {
+                        $("#team_delete_form").submit();
+                    },
+                    "再看看": function () {},
+                }
+            });
+        });
+    </script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid" id="e_alter_team">
+    <hr/>
+    <div class="row">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game' e_match.id %}">{{ e_match }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game_team' e_match.id %}">球队</a></li>
+                <li class="breadcrumb-item active">编辑 {{ a_team.team_name }}</li>
+            </ol>
+        </div>
+        <div class="col-md">
+            <form action="{% url 'bfb:delete_team' e_match.id a_team.id %}" method="post" id="team_delete_form">
+            {% csrf_token %}
+            <button id="team_delete_submit" class="btn btn-sm new">
+                <svg t="1614178386797" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4445" width="18" height="18"><path d="M597.333333 42.666667a128 128 0 0 1 128 128v42.666666h170.666667a42.666667 42.666667 0 0 1 0 85.333334h-42.666667v554.666666a128 128 0 0 1-128 128H298.666667a128 128 0 0 1-128-128V298.666667H128a42.666667 42.666667 0 1 1 0-85.333334h170.666667V170.666667a128 128 0 0 1 128-128h170.666666z m170.666667 256H256v554.666666a42.666667 42.666667 0 0 0 37.674667 42.368L298.666667 896h426.666666a42.666667 42.666667 0 0 0 42.368-37.674667L768 853.333333V298.666667z m-341.333333 128a42.666667 42.666667 0 0 1 42.666666 42.666666v256a42.666667 42.666667 0 0 1-85.333333 0v-256a42.666667 42.666667 0 0 1 42.666667-42.666666z m170.666666 0a42.666667 42.666667 0 0 1 42.666667 42.666666v256a42.666667 42.666667 0 0 1-85.333333 0v-256a42.666667 42.666667 0 0 1 42.666666-42.666666z m0-298.666667h-170.666666a42.666667 42.666667 0 0 0-42.368 37.674667L384 170.666667v42.666666h256V170.666667a42.666667 42.666667 0 0 0-37.674667-42.368L597.333333 128z" fill="#ff7272" p-id="4446"></path></svg>
+            </button>
+            </form>
+            <a class="btn btn-sm new" href="{% url 'bfb:create_athlete' e_match.id a_team.id %}" role="button">
+                <svg t="1617864642897" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2363" width="18" height="18"><path d="M182.3744 665.6a51.2 51.2 0 0 0-49.664 38.7584l-51.2 204.8A51.2 51.2 0 0 0 131.1232 972.8h761.6512a51.2 51.2 0 0 0 49.664-63.6416l-51.2-204.8a51.2 51.2 0 0 0-49.664-38.7584H182.3744z m0-51.2h659.2512a102.4 102.4 0 0 1 99.328 77.568l51.2 204.8A102.4 102.4 0 0 1 892.8768 1024H131.1744a102.4 102.4 0 0 1-99.328-127.232l51.2-204.8A102.4 102.4 0 0 1 182.3232 614.4zM512 460.8a204.8 204.8 0 1 0 0-409.6 204.8 204.8 0 0 0 0 409.6z m0 51.2a256 256 0 1 1 0-512 256 256 0 0 1 0 512z" fill="#e6e6e6" p-id="2364" data-spm-anchor-id="a313x.7781069.0.i0" class="selected"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    {% if msg %}
+    <p class="bg-danger text-white text-center p-2">{{ msg }}</p>
+    {% endif %}
+
+    <div class="manage_section">
+        <form method="post" id="alter_team_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-inline">
+                {{ team_info_form.team_name.label_tag }}
+                {{ team_info_form.team_name }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_num.label_tag }}
+                {{ team_info_form.team_num }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_group.label_tag }}
+                {{ team_info_form.team_group }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_isout.label_tag }}
+                {{ team_info_form.team_isout }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_introduction.label_tag }}
+                {{ team_info_form.team_introduction }}
+            </div>
+            <div class="form-inline">
+                {{ team_info_form.team_picture.label_tag }}
+                {% if a_team.team_picture %}
+                <div class="show_team_picture">
+                    <img src="{{ MEDIA_URL }}{{ a_team.team_picture }}" alt="队标" class="show_team_picture_d"/>
+                </div>
+                {% endif %}
+                {{ team_info_form.team_picture }}
+                <script src="{% static 'bfb/javascript/file_input_detect.js' %}"></script>
+            </div>
+            <hr/>
+            <button class="btn confirm btn-outline-light" id="test_a">修改</button>
+            <script>
+                $(function () {
+                    $("#test_a").click(function () {
+                        if( test("id_team_picture", 1024) ){
+                            $("#alter_team_form").submit();
+                            // alert("提交成功！");
+                        }
+                    });
+                })
+            </script>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,67 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(状态) </title>
+    {% endblock %}
+{% block js %}
+<script src="{% static 'bfb/javascript/option_selected.js' %}"></script>
+<script>
+    $(function () {
+        option_selected($("#id_match_stage"), "{{ e_match.match_state.match_stage|safe }}");
+        option_selected($("#id_match_progress"), "{{ e_match.match_state.match_progress|safe }}");
+        option_selected($("#id_dieout_progress"), "{{ e_match.match_state.dieout_progress|safe }}");
+        let ispause = "{{ e_match.match_state.isPause|safe }}";
+        let check_box = $("#id_isPause");
+        if (ispause=='False'){
+            check_box.attr('checked',false);
+        } else{
+            check_box.attr('checked',true);
+        }
+        check_box.css('cssText', 'width: 2% !important');
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid" id="edit_game_state" >
+    <hr/>
+    <div class="row m_title">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game' e_match.id %}">{{ e_match.match_name }}</a></li>
+                <li class="breadcrumb-item active">编辑 状态</li>
+            </ol>
+        </div>
+    </div>
+
+    {% if error_message %}
+    <p class="bg-danger text-white text-center p-2">{{ error_message }}</p>
+    {% endif %}
+
+    <div class="manage_section" id="e_game_state_d">
+        <form method="post">
+            {% csrf_token %}
+            {% for line in game_state_form %}
+            <div class="form-inline">
+                {{ line.label_tag }}
+                {{ line }}
+            </div>
+            <hr/>
+            {% endfor %}
+            <button type="submit" class="btn confirm btn-outline-light">更新</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

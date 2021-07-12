@@ -1,0 +1,120 @@
+/* 小组赛背景图 */
+.group_background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  height: 400px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url(../image/bg-1-1-1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#contest_title {
+  margin-top: 100px;
+  margin-bottom: 120px;
+}
+
+/* 左侧导航栏 */
+.sel {
+  z-index: 1;
+  background-color: rgba(241, 241, 241, 0.1);
+  margin: 30px 0 0 30px;
+  height: 100%;
+}
+
+.sel a {
+  color: #000;
+  height: 50px;
+  font-family: 微软雅黑;
+  font-size: 16px;
+  padding: 10px 0 10px 30px;
+  vertical-align: middle;
+}
+
+.sel a.active {
+  background-color: #A163F7;
+  color: white;
+}
+
+.sel a:hover:not(.active) {
+  background-color: rgb(159, 165, 187);
+  color: white;
+}
+
+/* 积分表标题栏 */
+.title {
+  background-color: rgba(255, 255, 255, 0.6);
+  font-family: 微软雅黑;
+  color: rgb(106, 68, 144);
+  font-size: 18px;
+  line-height: 30px;
+  padding: 20px 20px 5px 40px;
+  box-shadow: 3px 4px 8px 5px rgba(20, 20, 20, 0.2);
+  border: 0 dashed #c0c0f1;
+  border-radius: 15px;
+}
+
+/* 小篮球图标 */
+.basketball {
+  float: right;
+  height: 45px;
+  width: 45px;
+  margin-right: 20px;
+}
+
+/* 积分表内容段 */
+
+/* 背景框 */
+.table {
+  box-shadow: 3px 4px 8px 5px rgba(20, 20, 20, 0.2);
+  font-family: 微软雅黑;
+  text-align: center;
+}
+
+/* 表格小标题 */
+caption {
+  caption-side: top;
+  text-align: left;
+}
+
+/* 淘汰赛流程图 */
+.contest_list {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+.arrowhead img { margin: auto; }
+
+/* 队伍名称矩形 */
+.rectangle {
+  width: 100px;
+  height: 50px;
+  font-family: 微软雅黑;
+  color: black;
+  text-align: center;
+  background-color: #FCFCEF;
+  margin: 30px;
+  line-height: 50px;
+  box-shadow: 3px 4px 8px 5px rgba(20, 20, 20, 0.2);
+}
+
+/* 排名情况表格 */
+
+/* 特殊项 */
+.leader { background-color: rgb(255, 230, 175); }
+
+/* 右下角落款 */
+.luokuan {
+  margin: 0 150px 0 0;
+  font-family: 微软雅黑;
+  color: black;
+  text-align: right;
+}

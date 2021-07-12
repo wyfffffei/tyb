@@ -1,0 +1,275 @@
+/* 论坛分类 */
+#art_classify li {
+  margin: 0;
+}
+
+#art_classify span {
+  font-family: 微软雅黑;
+  color: rgb(180, 28, 67);
+  font-size: 14px;
+}
+
+#art_classify .border-active {
+  border: 2px dashed #f87575;
+  border-radius: 15px;
+}
+
+/* 社区登录 */
+#log {
+  padding: 20px;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+#log li {
+  list-style-type: circle;
+  margin-bottom: 15px;
+}
+
+#log a {
+  font-size: 14px;
+  color: rgb(231, 100, 135);
+  text-decoration: none;
+}
+#log a:hover { color: rgb(180, 28, 67); }
+
+.com_head { margin: 0 0 20px 0; }
+
+.com_head img {
+  width: 100px;
+  height: 100px;
+}
+
+/* 文章页面 */
+.article_each {
+  min-height: 200px;
+  border: 2px dashed #f6f0f0;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  padding: 5px;
+}
+
+.article_each:hover {
+  border: 2px dashed #cecece !important;
+  background-color: rgba(255, 244, 196, 0.42) !important;
+}
+
+.articleTitle {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.article_label {
+  background-color: #b58989;
+  width: 8%;
+  border-radius: 7px;
+  text-align: center;
+  margin: 8px;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+}
+.article_label:hover { background-color: #f87979; }
+
+.titleBody {
+  margin: 8px;
+  padding: 5px;
+}
+
+.titleBody a {
+  font-size: 16px;
+  color: #b58989;
+  text-decoration: none;
+}
+.titleBody a:hover { color: #c15a5a; }
+
+.articleBody {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.articleDetail {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 10px;
+  font-family: 微软雅黑;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* 正文内容 */
+.art_content {
+  font-size: 16px;
+  font-family: 微软雅黑;
+  height: 125px;
+  width: 60%;
+  margin: 10px;
+  padding: 10px;
+}
+
+.art_content_100 {
+  font-size: 16px;
+  font-family: 微软雅黑;
+  height: 125px;
+  width: 90%;
+  margin: 10px;
+  padding: 10px;
+}
+
+.art_picture {
+  height: 125px;
+  width: 30%;
+  margin: 10px;
+}
+
+.art_picture img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: all 0.2s;
+}
+.art_picture img:hover { transform: scale(1.01); }
+
+/* 多行省略 */
+.limit-length { overflow: hidden; }
+
+.limit-length p {
+  position: relative;
+  line-height: 1.5em;
+  height: 6em;
+  overflow: hidden;
+}
+
+/* 单行省略 */
+.line-limit-length {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 登录界面 */
+.empty { height: 300px; }
+
+.sign_in {
+  position: relative;
+  width: 35%;
+  margin: 0 auto;
+  background-color: rgb(152, 135, 234);
+  z-index: 2;
+  border-radius: 15px;
+}
+
+.sign_icon img {
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: -50px;
+}
+
+.sign_in h3 {
+  text-align: center;
+  position: relative;
+  top: -25px;
+  color: #ffefb7;
+}
+
+.sign_in .form-group {
+  padding-left: 30px;
+  padding-right: 30px;
+  color: white;
+}
+
+.sign_in input {
+  outline-style: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 13px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 微软雅黑;
+}
+
+.sign_in input:hover,
+.sign_in .btn:hover {
+  opacity: 0.85;
+  color: #494949;
+}
+
+.sign_in .btn-submit {
+  width: 90% !important;
+  display: block;
+  margin: 30px auto 25px auto;
+  padding: 10px 30px 10px 30px;
+  opacity: 0.95;
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: none;
+  background-color: #fbff80;
+  color: #5a5a5a;
+}
+
+/* 底部容器 */
+.sign_in .help {
+  text-align: center;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.sign_in .help a { color: white; }
+.sign_in .help a:hover { color: white; }
+
+/* 注册页面 */
+.register_form {
+  width: 35%;
+  margin: 30px auto;
+  line-height: 60px;
+}
+
+.alter_form {
+  width: 50%;
+  margin: 30px auto;
+  line-height: 60px;
+}
+
+.register_form .form-inline label,
+.alter_form .form-inline label {
+  width: 35% !important;
+  justify-content: left;
+}
+
+/* 背景图片 */
+.community_background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  height: 600px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.empty_community {
+  height: 540px;
+  width: 100%;
+}
+.c_b_main { background-image: url(../image/bg-3-2-1.jpg); }
+.c_b_login { background-image: url(../image/bg-6-1-1.jpg); }
+
+html,
+body { background-color: #f3f3f3 !important; }

@@ -1,0 +1,143 @@
+/* 队伍详情页1 */
+.team_background_1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  height: 500px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url(../image/bg-5-2-1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#team_title { margin-top: 450px; }
+
+/* 面包屑导航重写 */
+.breadcrumb { background-color: rgba(255, 144, 60, 0.36); }
+.breadcrumb-item + .breadcrumb-item::before { content: "->"; }
+.breadcrumb a { text-decoration: none; }
+
+/* 赛事轮播动画图片 */
+.carousel-item {
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-item img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 竖线图标 */
+.f_l_vertical_icon {
+  height: 55px;
+  width: 20px;
+  float: left;
+  vertical-align: middle;
+  position: relative;
+  left: -10px;
+  visibility: hidden;
+}
+
+.small_title_contest {
+  margin: 30px 0 25px 15px;
+  position: relative;
+  left: 0;
+}
+
+/* 队伍总览-0 */
+.contest_detail {
+  background-color: #ffffffab;
+  box-shadow: 3px 3px 3px #d8d8d8;
+}
+.contest_detail h5 { padding: 10px 0 0 5px; }
+
+.contest_detail a {
+  text-decoration: none;
+  color: rgb(255, 168, 110);
+}
+.contest_detail a:hover { color: rgb(248, 115, 7); }
+
+/* 队伍总览-1 */
+
+/* 班级 */
+.team_card {
+  background-color: white;
+  border: 1px solid #d5d3d3;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+/* 班名 */
+.teamname h5 { padding-left: 40px; }
+.teamname a {
+  text-decoration: none;
+  color: #6f6f6f;
+  float: right;
+  padding-right: 40px;
+}
+.teamname a:hover { color: black; }
+
+/* 运动员选项卡 */
+.athlete {
+  background-color: white;
+  display: flex;
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  margin: 0;
+  min-width: 250px;
+}
+
+/* 运动员头像 */
+.team_card_head {
+  height: 125px;
+  width: 125px;
+  margin: 25px 10px 3px 3px;
+  vertical-align: center;
+}
+
+.head {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.team_card_info {
+  width: 150px;
+  height: 200px;
+  margin: 10px;
+}
+
+.team_card_info p {
+  font-size: 8px;
+  line-height: 15px;
+}
+
+/* 队标 */
+.team_sign {
+  height: 150px;
+  min-width: 75px;
+  margin: 15px;
+  padding: 25px;
+}
+
+.sign {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+body { background-color: #f3f3f3; }

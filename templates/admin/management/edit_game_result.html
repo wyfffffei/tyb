@@ -1,0 +1,61 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(结果) </title>
+    {% endblock %}
+{% block js %}
+<script>
+    $(function () {
+        $("#id_result_1st").val("{{ e_match.result.result_1st|safe }}");
+        $("#id_result_2nd").val("{{ e_match.result.result_2nd|safe }}");
+        $("#id_result_3rd").val("{{ e_match.result.result_3rd|safe }}");
+        $("#id_result_4th").val("{{ e_match.result.result_4th|safe }}");
+        $("#id_result_mvp").val("{{ e_match.result.result_mvp|safe }}");
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid" id="edit_game_result" >
+    <hr/>
+    <div class="row">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game' e_match.id %}">{{ e_match }}</a></li>
+                <li class="breadcrumb-item active">编辑 结果</li>
+            </ol>
+        </div>
+    </div>
+
+    {% if msg %}
+    <p class="bg-danger text-white text-center p-2">{{ msg }}</p>
+    {% endif %}
+
+    <div class="manage_section" id="e_game_result_d">
+        <form method="post">
+            {% csrf_token %}
+            {% for line in game_result_form %}
+            <div class="form-inline">
+                {{ line.label_tag }}
+                {{ line }}
+            </div>
+            <hr/>
+            {% endfor %}
+            <button type="submit" class="btn confirm btn-outline-light">提交</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+</body>
+</html>

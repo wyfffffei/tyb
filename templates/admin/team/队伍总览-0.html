@@ -1,0 +1,70 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/team.css' %}">
+{% endblock %}
+{% block title %}
+<title> 队伍详情</title>{% endblock %}
+{% block js %}
+<script src="{% static 'bfb/javascript/carousel_action.js' %}"></script>{% endblock %}
+</head>
+
+<body>
+{% block content %}
+    <div id="bki" class="team_background_1"></div>
+    <script>
+    $(function () {
+        let bkg_url = "http://sityb.cn/static/bfb/image/bg-5-2.jpg";
+        loadImg(bkg_url, addImg);
+    })
+    </script>
+    <div class="container">
+        <div id="team_title" class="row">
+            <div class="col-md">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">队伍总览</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 contest_detail">
+                {% for match in matchs %}
+                <div class="small_title_contest">
+                    <img class="f_l_vertical_icon" src="{% static 'bfb/image/vertical_icon.svg' %}" alt="icon"/>
+                    <a href="{% url 'bfb:teamall' match.id %}">
+                        <h6>{{ match.match_name }}</h6>
+                        <p>{{ match.match_time }}</p>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-9">
+                <div id="demo" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for match in matchs %}
+                        <div class="carousel-item">
+                            <a href="{% url 'bfb:teamall' match.id %}">
+                                <img src="{{ MEDIA_URL }}{{ match.match_picture }}" alt="比赛图片" class="contest_picture">
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#demo" data-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+</body>
+</html>

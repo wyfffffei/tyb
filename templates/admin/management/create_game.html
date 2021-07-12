@@ -1,0 +1,111 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+    <!-- 输入提示框 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+{% block title %}
+    <title> Nasaa管理系统(新建比赛) </title>
+{% endblock %}
+{% block js %}
+    <!-- 输入提示框 -->
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid">
+    <hr/>
+    <div class="row">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item active">创建 比赛</li>
+            </ol>
+        </div>
+    </div>
+
+    {% if msg %}
+    <p class="bg-danger text-white text-center p-2">{{ msg }}</p>
+    {% endif %}
+
+    <div id="create_game" class="manage_section">
+        <form method="post" id="create_game_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-inline">
+                {{ game_info_form.match_name.label_tag }}
+                {{ game_info_form.match_name }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.match_season.label_tag }}
+                {{ game_info_form.match_season }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.match_time.label_tag }}
+                {{ game_info_form.match_time }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.match_location.label_tag }}
+                {{ game_info_form.match_location }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.group_num.label_tag }}
+                {{ game_info_form.group_num }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.team_num.label_tag }}
+                {{ game_info_form.team_num }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.match_object.label_tag }}
+                {{ game_info_form.match_object }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ game_info_form.match_rule.label_tag }}
+                {{ game_info_form.match_rule }}
+            </div>
+            <hr/>
+            <div class="form-group">
+                {{ game_info_form.match_picture.label_tag }}
+                {{ game_info_form.match_picture }}
+                <script src="{% static 'bfb/javascript/file_input_detect.js' %}"></script>
+            </div>
+            <hr/>
+            <button id="create_game_submit" class="btn confirm btn-outline-light">创建</button>
+            <script type="text/javascript">
+                $(function () {
+                    $("#create_game_submit").confirm({
+                        title: '<p style="color: red">提示</p>',
+                        content: '<p style="color: gray">您正在添加一件赛事；球队数，小组数和比赛规则添加后无法修改，请确认！</p>',
+                        buttons: {
+                            "确认": function () {
+                                if( test("id_match_picture", 1024) ){
+                                    $("#create_game_form").submit()
+                                    // alert("提交成功！");
+                                }
+                            },
+                            "再看看": function () {},
+                        }
+                    });
+                })
+            </script>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+</body>
+</html>

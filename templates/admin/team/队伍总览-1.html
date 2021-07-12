@@ -1,0 +1,63 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/team.css' %}">
+{% endblock %}
+{% block title %}
+    <title> 队伍详情</title>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div id="bki" class="team_background_1"></div>
+<script>
+    $(function () {
+        let bkg_url = "http://sityb.cn/static/bfb/image/bg-5-2.jpg";
+        loadImg(bkg_url, addImg);
+    })
+    </script>
+<div class="container">
+    <ol id="team_title" class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'bfb:team' %}">队伍总览</a></li>
+        <li class="breadcrumb-item active">{{ match.match_name }}</li>
+    </ol>
+    {% for team in teams %}
+        <div class="team_card">
+            <div class="row teamname">
+                <div class="col-md">
+                    <h5>{{ team.get_team_group_display }} - {{ team.team_name }} - {{ team.get_team_num_display }}</h5>
+                </div>
+                <div class="col-md">
+                    <a href="{% url 'bfb:teamdetail' match.id team.id %}">更多</a>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-2 team_sign">
+                    <img class="sign" src="{{ MEDIA_URL }}{{ team.team_picture }}" alt="队标">
+                </div>
+                {% for ath in team.athlete_set.all|slice:"3" %}
+                <div class="col-md-2 athlete">
+                    <div class="team_card_head">
+                        <img class="img-thumbnail head" src="{{ MEDIA_URL }}{{ ath.ath_picture }}" alt="运动员头像">
+                    </div>
+                    <div class="team_card_info">
+                        <h5 class="card-title">{{ ath.ath_name }}</h5>
+                        <p>号码 {{ ath.ath_number }}</p>
+                        <p>身高 {%if ath.ath_height%}{{ ath.ath_height }}米{%else%}秘密{%endif%}</p>
+                        <p>体重 {%if ath.ath_weight%}{{ ath.ath_weight }}公斤{%else%}秘密{%endif%}</p>
+                        <p>司职 {{ ath.get_ath_position_display }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+    <!-- 输入提示框 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(球员) </title>
+    {% endblock %}
+{% block js %}
+    <!-- 输入提示框 -->
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bfb/javascript/file_input_detect.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bfb/javascript/option_selected.js' %}"></script>
+    <script>
+        $(function () {
+            let iscaptain = "{{ a_ath.isCaptain }}";
+            let check_box = $("#id_is_captain");
+            if (iscaptain=='False'){
+                check_box.attr('checked',false);
+            } else{
+                check_box.attr('checked',true);
+            }
+            check_box.css('cssText', 'width: 2% !important');
+            option_selected($("#id_ath_position"), "{{ a_ath.ath_position }}");
+            $("#id_ath_name").val("{{ a_ath.ath_name|safe }}");
+            $("#id_ath_sno").val("{{ a_ath.ath_sno|safe }}");
+            $("#id_ath_bir").val("{{ a_ath.ath_bir|safe }}");
+            $("#id_ath_height").val("{{ a_ath.ath_height|safe }}");
+            $("#id_ath_weight").val("{{ a_ath.ath_weight|safe }}");
+            $("#id_ath_number").val("{{ a_ath.ath_number|safe }}");
+        })
+    </script>
+{% endblock %}
+</head>
+<body>
+{% block content %}
+<div class="container-fluid" id="edit_athlete">
+    <hr/>
+    <div class="row">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game' e_match.id %}">{{ e_match }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game_team' e_match.id %}">球队</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:alter_team' e_match.id a_team.id %}">
+                    {{ a_team.team_name }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:create_athlete' e_match.id a_team.id %}">球员</a></li>
+                <li class="breadcrumb-item active">编辑 {{ a_ath.ath_name }}</li>
+            </ol>
+        </div>
+    </div>
+
+    {% if msg %}
+    <p class="bg-danger text-white text-center p-2">{{ msg }}</p>
+    {% endif %}
+
+    <div class="manage_section">
+        <form method="post" id="athlete_alter_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for form in ath_form %}
+            <div class="form-inline">
+                {{ form.label_tag }}
+                {{ form }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn confirm btn-outline-light">修改</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

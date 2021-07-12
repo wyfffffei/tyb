@@ -1,0 +1,231 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+    <!-- 输入提示框 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(编辑比赛) </title>
+    {% endblock %}
+{% block js %}
+    <!-- 输入提示框 -->
+    <script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid" id="edit_game" >
+    <hr/>
+    <div class="row m_title">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item active">{{ e_match.match_name }}</li>
+            </ol>
+        </div>
+        <div class="col-md">
+            <form method="post" id="match_delete_form">
+                {% csrf_token %}
+                <button id="match_delete_submit" class="btn btn-sm new">
+                    <!-- color:#ff7272 -->
+                    <svg t="1614178386797" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4445" width="18" height="18"><path d="M597.333333 42.666667a128 128 0 0 1 128 128v42.666666h170.666667a42.666667 42.666667 0 0 1 0 85.333334h-42.666667v554.666666a128 128 0 0 1-128 128H298.666667a128 128 0 0 1-128-128V298.666667H128a42.666667 42.666667 0 1 1 0-85.333334h170.666667V170.666667a128 128 0 0 1 128-128h170.666666z m170.666667 256H256v554.666666a42.666667 42.666667 0 0 0 37.674667 42.368L298.666667 896h426.666666a42.666667 42.666667 0 0 0 42.368-37.674667L768 853.333333V298.666667z m-341.333333 128a42.666667 42.666667 0 0 1 42.666666 42.666666v256a42.666667 42.666667 0 0 1-85.333333 0v-256a42.666667 42.666667 0 0 1 42.666667-42.666666z m170.666666 0a42.666667 42.666667 0 0 1 42.666667 42.666666v256a42.666667 42.666667 0 0 1-85.333333 0v-256a42.666667 42.666667 0 0 1 42.666666-42.666666z m0-298.666667h-170.666666a42.666667 42.666667 0 0 0-42.368 37.674667L384 170.666667v42.666666h256V170.666667a42.666667 42.666667 0 0 0-37.674667-42.368L597.333333 128z" fill="#ff7272" p-id="4446"></path></svg>
+                </button>
+                <script type="text/javascript">
+                $(function () {
+                    $("#match_delete_submit").confirm({
+                        title: '<p style="color: red">提示</p>',
+                        content: '<p style="color: gray">确定删除该赛事吗？该操作可能无法恢复！</p>',
+                        buttons: {
+                            "确认": function () {
+                                $("#match_delete_form").submit()
+                            },
+                            "再看看": function () {},
+                        }
+                    });
+                })
+                </script>
+            </form>
+        </div>
+    </div>
+
+    {% if error_message %}
+    <p class="text-center text-white bg-danger p-3">{{ error_message.error_message }}</p>
+    {% endif %}
+
+    <div class="manage_section" id="e_game_info">
+        <div class="row">
+            <div class="col-md-8">
+                <p>基本信息</p>
+                <table class="table text-white font-weight-light table-sm">
+                    <thead>
+                        <tr>
+                            <td>比赛名称</td>
+                            <td>赛制</td>
+                            <td>球队数</td>
+                            <td>分组</td>
+                            <td>时间</td>
+                            <td>对象</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ e_match.match_name }}</td>
+                            <td>{{ e_match.get_match_rule_display }}</td>
+                            <td>{{ e_match.team_num }}</td>
+                            <td>{{ e_match.get_group_num_display }}</td>
+                            <td>{{ e_match.match_time }}</td>
+                            <td>{{ e_match.match_object }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md">
+                <a class="btn btn-sm new" role="button" href="{% url 'bfb:edit_game_info' e_match.id %}">
+                    <svg t="1614181129516" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4992" width="18" height="18"><path d="M945.194667 84.138667a170.666667 170.666667 0 0 1 0 241.322666L371.925333 898.688a42.368 42.368 0 0 1-19.114666 11.093333L34.133333 995.114667l85.418667-318.72 1.578667-4.693334a42.410667 42.410667 0 0 1 9.472-14.421333L703.829333 84.181333a170.666667 170.666667 0 0 1 241.365334 0z m-176.384 55.978666l-4.693334 4.352L199.04 709.546667 154.88 874.410667l164.821333-44.16L884.821333 265.130667a85.333333 85.333333 0 0 0 4.352-116.010667l-4.352-4.693333a85.333333 85.333333 0 0 0-116.010666-4.266667z" fill="#4ac9ff" p-id="4993"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="manage_section" id="e_game_state">
+        <div class="row">
+            <div class="col-md-8">
+                <p>状态</p>
+                <table class="table text-white font-weight-light table-sm">
+                    <thead>
+                        <tr>
+                            <td>比赛状态</td>
+                            <td>比赛阶段</td>
+                            <td>淘汰赛阶段</td>
+                            <td>是否暂停</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><mark>{{ e_match.match_state.get_match_stage_display }}</mark></td>
+                            <td>{{ e_match.match_state.get_match_progress_display }}</td>
+                            <td>{{ e_match.match_state.get_dieout_progress_display }}</td>
+                            {% if e_match.match_state.isPause %}
+                            <td>是</td>
+                            {% else %}
+                            <td>否</td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md">
+                <a class="btn btn-sm new" role="button" href="{% url 'bfb:edit_game_state' e_match.id %}">
+                    <svg t="1614181129516" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4992" width="18" height="18"><path d="M945.194667 84.138667a170.666667 170.666667 0 0 1 0 241.322666L371.925333 898.688a42.368 42.368 0 0 1-19.114666 11.093333L34.133333 995.114667l85.418667-318.72 1.578667-4.693334a42.410667 42.410667 0 0 1 9.472-14.421333L703.829333 84.181333a170.666667 170.666667 0 0 1 241.365334 0z m-176.384 55.978666l-4.693334 4.352L199.04 709.546667 154.88 874.410667l164.821333-44.16L884.821333 265.130667a85.333333 85.333333 0 0 0 4.352-116.010667l-4.352-4.693333a85.333333 85.333333 0 0 0-116.010666-4.266667z" fill="#4ac9ff" p-id="4993"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="manage_section" id="e_game_team">
+        <div class="row">
+            <div class="col-md-8">
+                <p>球队</p>
+                <table class="table text-white font-weight-light table-sm">
+                    <thead>
+                        <tr>
+                            <td>参赛球队</td>
+                            <td>班级</td>
+                            <td>组别</td>
+                            <td>状态</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in e_match.team_set.all %}
+                        <tr>
+                            <td>{{ t.team_name }}</td>
+                            <td>{{ t.get_team_num_display }}</td>
+                            <td>{{ t.get_team_group_display }}</td>
+                            <td>{{ t.get_isOut_display }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md">
+                <a class="btn btn-sm new" role="button" href="{% url 'bfb:edit_game_team' e_match.id %}">
+                    <svg t="1614181129516" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4992" width="18" height="18"><path d="M945.194667 84.138667a170.666667 170.666667 0 0 1 0 241.322666L371.925333 898.688a42.368 42.368 0 0 1-19.114666 11.093333L34.133333 995.114667l85.418667-318.72 1.578667-4.693334a42.410667 42.410667 0 0 1 9.472-14.421333L703.829333 84.181333a170.666667 170.666667 0 0 1 241.365334 0z m-176.384 55.978666l-4.693334 4.352L199.04 709.546667 154.88 874.410667l164.821333-44.16L884.821333 265.130667a85.333333 85.333333 0 0 0 4.352-116.010667l-4.352-4.693333a85.333333 85.333333 0 0 0-116.010666-4.266667z" fill="#4ac9ff" p-id="4993"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="manage_section" id="e_game_contest">
+        <div class="row">
+            <div class="col-md-8">
+                <p>赛事</p>
+                <table class="table text-white font-weight-light table-sm">
+                    <thead>
+                        <tr>
+                            <td>队1</td>
+                            <td>队2</td>
+                            <td>种类</td>
+                            <td>状态</td>
+                            <td>ID</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for contest in contest_record %}
+                        <tr>
+                            <td>{{ contest.0 }}</td>
+                            <td>{{ contest.1 }}</td>
+                            <td>{{ contest.2 }}</td>
+                            <td>{{ contest.3 }}</td>
+                            <td>{{ contest.4 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md">
+                <a class="btn btn-sm new" role="button" href="{% url 'bfb:edit_game_contest' e_match.id %}">
+                    <svg t="1614181129516" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4992" width="18" height="18"><path d="M945.194667 84.138667a170.666667 170.666667 0 0 1 0 241.322666L371.925333 898.688a42.368 42.368 0 0 1-19.114666 11.093333L34.133333 995.114667l85.418667-318.72 1.578667-4.693334a42.410667 42.410667 0 0 1 9.472-14.421333L703.829333 84.181333a170.666667 170.666667 0 0 1 241.365334 0z m-176.384 55.978666l-4.693334 4.352L199.04 709.546667 154.88 874.410667l164.821333-44.16L884.821333 265.130667a85.333333 85.333333 0 0 0 4.352-116.010667l-4.352-4.693333a85.333333 85.333333 0 0 0-116.010666-4.266667z" fill="#4ac9ff" p-id="4993"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="manage_section" id="e_game_result">
+        <div class="row">
+            <div class="col-md-8">
+                <p>结果</p>
+                <table class="table text-white font-weight-light table-sm">
+                    <thead>
+                        <tr>
+                            <td>冠军</td>
+                            <td>亚军</td>
+                            <td>季军</td>
+                            <td>殿军</td>
+                            <td>最有价值球员</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ e_match.result.result_1st }}</td>
+                            <td>{{ e_match.result.result_2nd }}</td>
+                            <td>{{ e_match.result.result_3rd }}</td>
+                            <td>{{ e_match.result.result_4th }}</td>
+                            <td>{{ e_match.result.result_mvp }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md">
+                <a class="btn btn-sm new" role="button" href="{% url 'bfb:edit_game_result' e_match.id %}">
+                    <svg t="1614181129516" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4992" width="18" height="18"><path d="M945.194667 84.138667a170.666667 170.666667 0 0 1 0 241.322666L371.925333 898.688a42.368 42.368 0 0 1-19.114666 11.093333L34.133333 995.114667l85.418667-318.72 1.578667-4.693334a42.410667 42.410667 0 0 1 9.472-14.421333L703.829333 84.181333a170.666667 170.666667 0 0 1 241.365334 0z m-176.384 55.978666l-4.693334 4.352L199.04 709.546667 154.88 874.410667l164.821333-44.16L884.821333 265.130667a85.333333 85.333333 0 0 0 4.352-116.010667l-4.352-4.693333a85.333333 85.333333 0 0 0-116.010666-4.266667z" fill="#4ac9ff" p-id="4993"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

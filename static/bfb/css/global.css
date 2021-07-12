@@ -1,0 +1,39 @@
+/* 导航栏 */
+#directory { z-index: 5; }
+#directory a { margin: 10px 19px 10px 19px; }
+#dir a { position: relative; }
+
+/* 导航下划线 */
+#dir a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  left: 50%;
+  height: 2px;
+  background-color: coral;
+}
+
+#dir a:hover::after {
+  width: 95%;
+  left: 5%;
+  top: 100%;
+  transition: all 0.5s;
+}
+
+/* 底部 */
+.bottom {
+  height: 50px;
+  text-align: center;
+  line-height: 15px;
+}
+
+.bottom p,
+#BeiAn a {
+  font-size: 14px;
+  color: #616161;
+}
+
+#BeiAn a:hover {
+  color: black;
+  text-decoration: none;
+}

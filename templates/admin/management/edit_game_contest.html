@@ -1,0 +1,145 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(赛事) </title>
+    {% endblock %}
+{% block js %}
+<script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+<script src="{% static 'bfb/javascript/option_selected.js' %}"></script>
+<script>
+    $(function () {
+        let msg = "{{ msg|safe }}";
+        if (msg) {
+            if (msg=="请提交完整表单！"){
+                $.alert({
+                    title: '<p style="color: black;">提示</p>',
+                    content: '<p style="color: black;">请提交完整表单！</p>',
+                    type: 'orange',
+                });
+            } else{
+                $.alert({
+                    title: '<p style="color: black;">提示</p>',
+                    content: '<p style="color: black;">状态已更新！</p>',
+                    type: 'green',
+                });
+            }
+        }
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid" id="edit_game_contest" >
+    <hr/>
+    <div class="row m_title">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game' e_match.id %}">{{ e_match.match_name }}</a></li>
+                <li class="breadcrumb-item active">编辑 赛事</li>
+            </ol>
+        </div>
+        <div class="col-md"><a id="score_update" class="new" href="{% url 'bfb:contest_update' e_match.id %}">小组赛积分更新</a></div>
+    </div>
+
+    {% if not contests_g %}
+    <p class="text-center text-white bg-danger p-3">请更新比赛状态！</p>
+    {% endif %}
+
+    <div class="manage_section" id="e_game_contest_g">
+        <h5>小组赛</h5>
+        <hr/>
+        {% for contest in contests_g %}
+        <form method="post" class="form-inline" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="g_cs1_{{ contest.id }}">{{ contest.battle_teams.all.0 }}</label>
+                <input type="number" name="cs1" id="g_cs1_{{ contest.id }}"
+                       class="form-control" value="{{ contest.cs1 }}" required/>
+            </div>
+            <div class="form-group">
+                <label for="g_cs2_{{ contest.id }}">{{ contest.battle_teams.all.1 }}</label>
+                <input type="number" name="cs2" id="g_cs2_{{ contest.id }}"
+                       class="form-control" value="{{ contest.cs2 }}" required/>
+            </div>
+            <div class="form-group">
+                <label for="g_state_{{ contest.id }}">状态</label>
+                <select name="state" id="g_state_{{ contest.id }}" class="form-control" required>
+                    <option value="unstarted">未开始</option>
+                    <option value="ready">准备中</option>
+                    <option value="ended">已结束</option>
+                </select>
+            </div>
+            <script>option_selected($("#g_state_"+"{{ contest.id }}"), "{{ contest.contest_state }}");</script>
+            <div class="form-group">
+                <label for="g_date_{{ contest.id }}">比赛日期</label>
+                <input type="text" name="date" id="g_date_{{ contest.id }}"
+                       class="form-control" maxlength="25" value="{{ contest.contest_date }}" required>
+            </div>
+            <div class="form-group">
+                <label for="g_time_{{ contest.id }}">比赛时间</label>
+                <input type="text" name="time" id="g_time_{{ contest.id }}"
+                       class="form-control" maxlength="25" value="{{ contest.contest_time }}" required>
+            </div>
+            <input type="hidden" name="contest_id" value="{{ contest.id }}"/>
+            <button type="submit" class="btn btn-outline-light btn-sm">保存</button>
+        </form>
+        <hr/>
+        {% endfor %}
+    </div>
+
+    <div class="manage_section" id="e_game_contest_d">
+        <h5>淘汰赛</h5>
+        <hr/>
+        {% for contest in contests_d %}
+        <form method="post" class="form-inline" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="d_cs1_{{ contest.id }}">{{ contest.battle_teams.all.0 }}</label>
+                <input type="number" name="cs1" id="d_cs1_{{ contest.id }}"
+                       class="form-control" value="{{ contest.cs1 }}" required/>
+            </div>
+            <div class="form-group">
+                <label for="d_cs2_{{ contest.id }}">{{ contest.battle_teams.all.1 }}</label>
+                <input type="number" name="cs2" id="d_cs2_{{ contest.id }}"
+                       class="form-control" value="{{ contest.cs2 }}" required/>
+            </div>
+            <div class="form-group">
+                <label for="d_state_{{ contest.id }}">状态</label>
+                <select name="state" id="d_state_{{ contest.id }}" class="form-control" required>
+                    <option value="unstarted">未开始</option>
+                    <option value="ready">准备中</option>
+                    <option value="ended">已结束</option>
+                </select>
+            </div>
+            <script>option_selected($("#d_state_"+"{{ contest.id }}"), "{{ contest.contest_state }}");</script>
+            <div class="form-group">
+                <label for="d_date_{{ contest.id }}">比赛日期</label>
+                <input type="text" name="date" id="d_date_{{ contest.id }}"
+                       class="form-control" maxlength="25" value="{{ contest.contest_date }}" required>
+            </div>
+            <div class="form-group">
+                <label for="d_time_{{ contest.id }}">比赛时间</label>
+                <input type="text" name="time" id="d_time_{{ contest.id }}"
+                       class="form-control" maxlength="25" value="{{ contest.contest_time }}" required>
+            </div>
+            <input type="hidden" name="contest_id" value="{{ contest.id }}"/>
+            <button type="submit" class="btn btn-outline-light btn-sm">保存</button>
+        </form>
+        <hr/>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,104 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+<link rel="stylesheet" type="text/css" href="{% static 'bfb/css/contest.css' %}">
+{% endblock %}
+{% block title %}
+    <title> 排名表</title>{% endblock %}
+    {% block js %}
+    <script>
+        $(function () {
+            $("thead tr").children("th.teamname").css({"text-align":"left"});
+            $("tbody").each(function () {
+                let num = 0;
+                $($(this).children("tr")).each(function (){ num++; })
+                if ( num > 3 ){ num = 2; }else{ num = 1; }
+                let fir = true;
+                $($(this).children("tr")).each(function () {
+                    $(this).addClass("leader");
+                    if (fir) {
+                        $(this).children("th").css("color", "tomato");
+                        fir = false;
+                    }else{
+                        $(this).children("th").css("color", "sandybrown");
+                    }
+                    num--;
+                    if ( num <= 0 ) { return false; }
+                })
+
+            })
+        })
+    </script>
+    {% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div id="bki" class="group_background"></div>
+<script>
+    $(function () {
+        let bkg_url = "http://sityb.cn/static/bfb/image/bg-1-1.jpg";
+        loadImg(bkg_url, addImg);
+    })
+</script>
+<div class="container-fluid">
+    <div class="row" id="contest_title">
+        <div class="col-md-8 offset-2 title">
+            <p><b>{{ game.match_name }}</b></p>
+            <p>{{ game.match_season }}
+                <span><img class="basketball" src="{% static 'bfb/image/basketball.png' %}" alt="篮球icon"></span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav flex-column sel">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'bfb:table' %}">排名情况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bfb:rank' %}">小组赛</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bfb:dieout' %}">淘汰赛</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            {% for group in rank_list %}
+            <table class="table table-bordered table-hover">
+                <caption><b>{{ group.0.get_team_group_display }}:</b></caption>
+                <thead>
+                <tr>
+                    <th colspan="2" class="teamname">球队名称</th>
+                    <th>胜</th>
+                    <th>负</th>
+                    <th>净胜分</th>
+                    <th>积分</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for team in group %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{ team.team_name }}</td>
+                    <td>{{ team.score.num_win }}</td>
+                    <td>{{ team.score.num_lose }}</td>
+                    <td>{{ team.score.netscore }}</td>
+                    <td>{{ team.score.score }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+
+</html>

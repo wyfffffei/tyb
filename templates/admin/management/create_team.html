@@ -1,0 +1,90 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+    <!-- 输入提示框 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统(新建球队) </title>
+    {% endblock %}
+{% block js %}
+    <!-- 输入提示框 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div class="container-fluid">
+    <hr/>
+    <div class="row">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'bfb:management_main' %}">比赛</a> </li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game' e_match.id %}">{{ e_match.match_name }}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'bfb:edit_game_team' e_match.id %}">球队</a></li>
+                <li class="breadcrumb-item active">添加 球队</li>
+            </ol>
+        </div>
+    </div>
+
+    {% if msg %}
+    <p class="bg-danger text-white text-center p-2">{{ msg }}</p>
+    {% endif %}
+
+    <div class="manage_section" id="e_game_team_d">
+        <form method="post" id="add_team_form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-inline">
+                {{ team_info_form.team_name.label_tag }}
+                {{ team_info_form.team_name }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_num.label_tag }}
+                {{ team_info_form.team_num }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_group.label_tag }}
+                {{ team_info_form.team_group }}
+            </div>
+            <hr/>
+            <div class="form-inline">
+                {{ team_info_form.team_isout.label_tag }}
+                {{ team_info_form.team_isout }}
+            </div>
+            <hr/>
+            <div class="form-group">
+                {{ team_info_form.team_introduction.label_tag }}
+                {{ team_info_form.team_introduction }}
+            </div>
+            <hr/>
+            <div class="form-group">
+                {{ team_info_form.team_picture.label_tag }}
+                {{ team_info_form.team_picture }}
+                <script src="{% static 'bfb/javascript/file_input_detect.js' %}"></script>
+            </div>
+            <hr/>
+            <button class="btn confirm btn-outline-light" id="test">添加</button>
+            <script>
+                $(function () {
+                    $("#test").click(function () {
+                        if( test("id_team_picture", 1024) ){
+                            $("#add_team_form").submit();
+                            // alert("提交成功！");
+                        }
+                    });
+                })
+            </script>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

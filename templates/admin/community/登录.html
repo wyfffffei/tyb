@@ -1,0 +1,67 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/community.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/jquery-confirm-332-min.css' %}">
+{% endblock %}
+<title> 请登录</title>
+{% block js %}
+<script type="text/javascript" src="{% static 'bfb/javascript/jquery-confirm-332-min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bfb/javascript/error_alert.js' %}"></script>
+<script>
+    $(function () {
+        let error_cap = '{{ login_form.captcha.errors|safe }}';
+        if (error_cap) {sign_error("验证码错误！");}
+        else {
+            let error = '{{ message|safe }}';
+            if(error) {sign_error(error)}
+        }
+    })
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div id="bki" class="community_background c_b_login"></div>
+<script>
+    $(function () {
+        let bkg_url = "http://sityb.cn/static/bfb/image/bg-6-1.jpg";
+        loadImg(bkg_url, addImg);
+    })
+</script>
+<div class="empty"></div>
+<div class="sign_in">
+    <div class="sign_icon"><img src="{% static 'bfb/image/宇航员.png' %}" alt="头像"/></div>
+    <form method="POST">
+        {% csrf_token %}
+        <h3>欢迎登陆</h3>
+        <div class="form-group">
+            {{ login_form.username.label_tag }}
+            {{ login_form.username}}
+        </div>
+        <div class="form-group">
+            {{ login_form.password.label_tag }}
+            {{ login_form.password }}
+        </div>
+        <br/>
+        <div class="form-group">
+            {{ login_form.captcha.label_tag }}
+            {{ login_form.captcha }}
+        </div>
+        <button type="submit" class="btn btn-submit">登录</button>
+    </form>
+    <div class="help">
+        <div class="register"><a href="{% url 'bfb:register' %}" class="btn">注册？</a></div>
+        <div class="helpmore"><a href="#" class="btn">忘记密码?</a></div>
+    </div>
+</div>
+
+{% endblock %}
+</body>
+
+</html>

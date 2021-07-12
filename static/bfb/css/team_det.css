@@ -1,0 +1,170 @@
+/* Bootstrap重写 */
+.breadcrumb { background-color: #f3f3f3; }
+.breadcrumb-item + .breadcrumb-item::before { content: "->"; }
+.breadcrumb a { text-decoration: none; }
+
+.nav-link { color: #b65eff; }
+.nav-link:hover { color: #9612ff; }
+
+/* 内容栏 */
+
+/* 运动员选项卡 */
+.athlete {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  background-color: #ffffff93;
+  margin: 10px;
+  padding: 10px;
+  line-height: 10px;
+}
+
+.athlete p {
+  font-size: 10px;
+  text-align: left;
+}
+
+/* 运动员头像 */
+.athlete_info a {
+  color: black;
+}
+
+.athlete_picture {
+  min-width: 100px;
+  height: 120px;
+}
+
+.athlete_picture img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* 运动员信息 */
+.teamsign {
+  float: right;
+  height: 100px;
+  width: 100px;
+  margin: 30px 150px 0 0;
+}
+
+/* 班级分割线 */
+.divide {
+  width: 95%;
+  border: 2px dashed #e4b48c;
+}
+
+/* 队伍总览-班级 */
+
+/* 主页文字栏 */
+.introduction { margin: 20px 0 25px 0; }
+
+/* 图标 */
+.pictureTeam_l,
+.pictureTeam_r {
+  min-width: 200px;
+  height: 180px;
+  margin: 20px 0 20px 0;
+}
+
+.pictureTeam_l img,
+.pictureTeam_r img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+#team_info p {
+  font-size: 20px;
+  margin: 20px 0 20px 10px;
+}
+
+/* 左侧留言栏 */
+.message {
+  padding: 5px;
+  margin-top: 10px;
+}
+
+/* 主页 */
+#class_intro #honor #ath {
+  margin-left: 20px;
+  font-size: 15px;
+}
+
+/* 表格框上部样式 */
+.team_detail { border: 2px solid rgba(127, 62, 252, 0.62); }
+.team_athlete a { color: black; }
+.team_athlete a:hover { color: #7830cd; }
+
+.chart {
+  display: flex;
+  display: -webkit-flex;
+  width: 100%;
+  height: 400px;
+}
+
+.chart_info { margin: 50px 0 0 30px; }
+
+#score_chart {
+  width: 800px;
+  height: 350px;
+}
+
+/* 球员名字链接样式 */
+tbody a #main_name a { color: black; }
+tbody a:hover { text-decoration: none; }
+
+#main_name a:hover {
+  text-decoration: none;
+  color: #005da8;
+}
+
+/* 留言板 */
+.notepad {
+  border-radius: 15px;
+  width: 100%;
+  font-size: 16px;
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 10px;
+}
+
+.ath_list {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+#ath_head {
+  width: 100px;
+  height: 100px;
+  margin-top: 25px;
+}
+
+#team_pic {
+  width: 150px;
+  height: 150px;
+  margin: 25px;
+}
+
+#ath_info,
+#team_state { margin: 25px; }
+
+#team_pic img,
+#ath_head img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+html body {
+  height: 96%;
+  background-color: #f3f3f3;
+}

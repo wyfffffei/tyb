@@ -1,0 +1,124 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+<link rel="stylesheet" type="text/css" href="{% static 'bfb/css/contest.css' %}">
+{% endblock %}
+{% block title %}
+    <title> 小组赛</title>{% endblock %}
+</head>
+
+<body>
+{% block content %}
+<div id="bki" class="group_background"></div>
+<script>
+    $(function () {
+        let bkg_url = "http://sityb.cn/static/bfb/image/bg-1-1.jpg";
+        loadImg(bkg_url, addImg);
+    })
+</script>
+<div class="container-fluid">
+    <div id="contest_title" class="row">
+        <div class="col-md-8 offset-2 title">
+            <p><b>{{ game.match_name }}</b></p>
+            <p>{{ game.match_season }}
+                <span><img class="basketball" src="{% static 'bfb/image/basketball.png' %}" alt="basketball_icon"></span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav flex-column sel">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bfb:table' %}">排名情况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'bfb:rank' %}">小组赛</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'bfb:dieout' %}">淘汰赛</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <script>
+                // 相同队伍赛事置‘x’
+                    $(function () {
+                        // let ele_x = $("<td></td>").text("x");
+                        let ele_x = "<td>x</td>";
+                        $("table tbody").each(function () {
+                            let tar = 0;
+                            $($(this).children("tr")).each(function () {
+                                let ptr = 0;
+                                $($(this).children("td")).each(function () {
+                                    if (ptr != tar) {
+                                        ptr++;
+                                        return true;
+                                    }else{
+                                        this.insertAdjacentHTML("afterend",ele_x);
+                                        // console.log(this.innerText);
+                                        tar++;
+                                        return false;
+                                    }
+                                })
+                                // console.log(this.innerText);
+                            })
+                        })
+                        //
+                        // $("#groupA tbody td").each(function () {
+                        //     if (i == j){
+                        //         this.insertAdjacentHTML("afterend",ele_x);
+                        //         j += 8;
+                        //     }
+                        //     i += 1;
+                        // });
+                        // i = 1;
+                        // j = 1;
+                        // $("#groupB tbody td").each(function () {
+                        //     if (i == j){
+                        //         this.insertAdjacentHTML("afterend",ele_x);
+                        //         j += 8;
+                        //     }
+                        //     i += 1;
+                        // });
+                    })
+                </script>
+            {% for group in contest_group %}
+            <table class="table table-bordered table-hover">
+                <caption><b>{{ group.0.get_team_group_display }}:</b></caption>
+                <thead>
+                <tr>
+                    <th>队名</th>
+                    {% for team in group %}
+                    <th> {{ team.team_name }} </th>
+                    {% endfor %}
+                    <th>积分</th>
+                    <th>净胜分</th>
+                    <th>名次</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for team in group %}
+                <tr>
+                    <td>{{ team.team_name }}</td>
+                    {% for info in team.info|slice:3 %}
+                    <td>{{ info.1 }}:{{ info.3 }}</td>
+                    {% endfor %}
+                    <td>{{ team.score.score }}</td>
+                    <td>{{ team.score.netscore }}</td>
+                    <td>{{ team.score.rank }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+
+</html>

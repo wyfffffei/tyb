@@ -1,0 +1,139 @@
+/* 近期赛事背景图 */
+.event_background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  height: 600px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url(../image/bg-2-1-1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#event_title {
+  margin-top: 350px;
+  margin-bottom: 75px;
+}
+
+/* 界面栏 */
+
+/* 小篮球图标 */
+#basketball {
+  float: right;
+  height: 45px;
+  width: 45px;
+}
+
+/* 长标题栏 */
+.long_title {
+  background-color: rgba(255, 255, 255, 0.6);
+  font-family: 微软雅黑;
+  color: rgb(112, 75, 149);
+  font-size: 18px;
+  line-height: 30px;
+  padding: 20px 20px 5px 40px;
+  box-shadow: 3px 4px 8px 5px rgba(20, 20, 20, 0.2);
+  border: 0 dashed #c0c0f1;
+  border-radius: 15px;
+}
+
+.sel {
+  z-index: 1;
+  background-color: rgba(241, 241, 241,0.1);
+  margin: 0 0 0 30px;
+  height: 100%;
+}
+
+.sel a {
+  color: #000;
+  height:50px;
+  font-family: 微软雅黑;
+  font-size: 16px;
+  padding: 10px 0px 10px 30px;
+  vertical-align: middle;
+}
+
+.sel a.active {
+  background-color: #A163F7;
+  color: white;
+}
+
+.sel a:hover:not(.active) {
+  background-color: rgb(159, 165, 187);
+  color: white;
+}
+
+.bgc { background-color: rgba(204, 216, 250, 0.8); }
+
+/* 赛事详情 */
+
+.contest_each {
+  border: 2px dashed #f6f0f0;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  padding: 5px;
+}
+
+.contest_each:hover {
+  border: 2px dashed #cecece !important;
+  background-color: rgba(255, 244, 196, 0.42) !important;
+}
+
+.dayTitle {
+  text-align: center;
+  background-color: #b58989;
+  cursor: pointer;
+  border-radius: 7px;
+  width: 10%;
+  padding: 5px;
+  margin: 10px;
+  font-size: 16px;
+  color: white;
+}
+
+.dayTitle:hover {
+  background-color: #f87979;
+}
+
+.contestBody {
+  display: -webkit-flex;
+  display: flex;
+}
+
+/* 比赛时间 */
+.contest_time {
+  font-family: 微软雅黑;
+  font-size: 16px;
+  margin: 15px;
+}
+
+/* 比赛类型 */
+.time-style {
+  font-family: Georgia;
+  font-size: 10px;
+  color: slategrey;
+}
+
+.battle_teams { margin: 15px; }
+.contest_result { margin: 15px; }
+
+.contest_content {
+  margin: 15px 15px 15px 40px;
+  width: 60%;
+}
+
+/* 内容底部栏 */
+.xxx_bottom {
+  text-align: center;
+  font-size: 15px;
+  font-family: 微软雅黑;
+}
+
+body {
+  background-color: rgb(240, 238, 245);
+}

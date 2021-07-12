@@ -1,0 +1,57 @@
+{% extends 'admin/目录.html' %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% load staticfiles %}
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bfb/css/management.css' %}">
+{% endblock %}
+    {% block title %}
+        <title> Nasaa管理系统 </title>
+    {% endblock %}
+{% block js %}
+<script>
+
+</script>
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+
+<div class="container-fluid">
+    <hr/>
+    <div class="row">
+        <div class="col-md">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">比赛</li>
+            </ol>
+        </div>
+        <div class="col-md">
+            <a href="{% url 'bfb:create_game' %}" class="btn btn-light btn-sm new" role="button">
+                <svg t="1614178280907" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4204" width="18" height="18"><path d="M512 170.666667a42.666667 42.666667 0 0 1 42.666667 42.666666v256h256a42.666667 42.666667 0 0 1 0 85.333334h-256v256a42.666667 42.666667 0 0 1-85.333334 0v-256H213.333333a42.666667 42.666667 0 0 1 0-85.333334h256V213.333333a42.666667 42.666667 0 0 1 42.666667-42.666666z" fill="#024a70" p-id="4205"></path></svg>
+            </a>
+        </div>
+    </div>
+
+    <div id="match_list" class="manage_section">
+    {% if empty_message %}
+        <p>{{ empty_message }}</p>
+    {% endif %}
+    {% for match in match_list %}
+        <div class="row">
+            <div class="col-md">
+                <a href="{% url 'bfb:edit_game' match.id %}">
+                    <p>{{ match.match_name }}</p>
+                    <small>{{ match.match_season }}</small>
+                </a>
+            </div>
+        </div>
+        <hr/>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>
