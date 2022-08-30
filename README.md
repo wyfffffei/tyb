@@ -34,7 +34,7 @@ python manage.py runserver 127.0.0.1:8000
 
 界面显示（现已失效）：
 
- ![image-20220831013121399](C:\Users\h3wyf\AppData\Roaming\Typora\typora-user-images\image-20220831013121399.png)
+ ![image-20220831013121399](./static/others/display.png)
 
 推荐参考网址：
 
