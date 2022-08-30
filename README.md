@@ -26,6 +26,10 @@ python manage.py runserver 127.0.0.1:8000
 
 打开浏览器，输入网址： <http://localhost:8000/bfb/directory/>
 
+界面显示（现已失效）：
+
+ ![image-20220831013121399](C:\Users\h3wyf\AppData\Roaming\Typora\typora-user-images\image-20220831013121399.png)
+
 推荐参考网址：
 
 - <https://docs.djangoproject.com/en/3.0/>
